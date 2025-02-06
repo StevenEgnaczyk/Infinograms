@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.wave-cell {
+  transition: all 100ms ease-in-out;
+  transform: scale(var(--wave-scale, 1)) !important;
+  box-shadow: 0 0 calc(var(--wave-opacity, 0) * 50px) rgba(251, 191, 36, var(--wave-opacity, 0));
+  z-index: 20;
+}
