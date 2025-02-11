@@ -13,7 +13,11 @@ function App(): ReactElement {
     startTime,
     endTime,
     toggleCell,
-    toggleShowSolution
+    toggleShowSolution,
+    solveSpeed,
+    setSolveSpeed,
+    isAutoSolving,
+    currentSeed
   } = useGameStore();
 
   return (
@@ -32,12 +36,34 @@ function App(): ReactElement {
             <div className="text-xl font-mono text-game-primary">
               {startTime ? formatTime(endTime ? endTime - startTime : Date.now() - startTime) : '00:00'}
             </div>
-            <button
-              onClick={toggleShowSolution}
-              className="px-4 py-2 text-game-accent hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              {showSolution ? 'Hide Solution' : 'Reveal Solution'}
-            </button>
+            <div className="flex items-center gap-2">
+              {isAutoSolving && (
+                <div className="flex items-center gap-2">
+                  <label className="text-sm text-game-primary">Speed:</label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="5"
+                    value={solveSpeed}
+                    onChange={(e) => setSolveSpeed(Number(e.target.value))}
+                    className="w-24"
+                  />
+                </div>
+              )}
+              <button
+                onClick={toggleShowSolution}
+                className="px-4 py-2 text-game-accent hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                {showSolution ? 'Hide Solution' : 'Reveal Solution'}
+              </button>
+              <button
+                onClick={() => useGameStore.getState().startAutoSolve()}
+                className="px-4 py-2 text-game-secondary hover:bg-gray-100 rounded-lg transition-colors"
+                disabled={showSolution || isVictory}
+              >
+                {isAutoSolving ? 'Stop Solving' : 'Auto Solve'}
+              </button>
+            </div>
           </header>
           
           <main className="flex-1 relative overflow-hidden pt-8">
@@ -48,6 +74,7 @@ function App(): ReactElement {
               showSolution={showSolution}
               startTime={startTime}
               endTime={endTime}
+              currentSeed={currentSeed}
             />
           </main>
         </div>

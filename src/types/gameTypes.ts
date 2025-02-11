@@ -1,15 +1,20 @@
+export type Difficulty = 'easy' | 'medium' | 'hard' | 'custom';
+
 export interface GridSize {
   rows: number;
   columns: number;
 }
-
-export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export interface NonogramGame {
   solution: boolean[][];
   userGrid: (boolean | 'x')[][];
   rowHints: number[][];
   columnHints: number[][];
+}
+
+export interface ImageProcessingOptions {
+  threshold: number;
+  maxSize: GridSize;
 }
 
 export interface GameState {
@@ -22,6 +27,7 @@ export interface GameState {
   endTime: number | null;
   currentSeed: string;
   generateNewGame: (size: GridSize, difficulty: Difficulty, seed?: string) => void;
+  generateFromImage: (image: File, options: ImageProcessingOptions) => Promise<string>;
   toggleCell: (row: number, col: number, nextState?: boolean | 'x') => void;
   toggleShowSolution: () => void;
   checkSolution: () => void;
