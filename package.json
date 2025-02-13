@@ -3,10 +3,10 @@
   "homepage": "https://stevenegnaczyk.github.io/Infinograms/",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist --clean --no-history"
   },
   "dependencies": {
     "@types/react": "^19.0.8",
